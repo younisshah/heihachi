@@ -1,5 +1,5 @@
 # heihachi
-Site Checker with Time Scheduling
+Site Checker with Time Scheduling in Golang
 
 ## Steps
  - Configure __config.json__ file with the sites to monitor and your email settings.
