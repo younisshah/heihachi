@@ -8,7 +8,7 @@ import (
 func main() {
 
 	// Make a new ticker for 10 seconds - make this configurable TODO
-	ticker := time.NewTicker(time.Duration(10) * time.Second)
+	ticker := time.NewTicker(time.Duration(10) * time.Minute)
 	//make a quit/stop channel
 	quit := make(chan struct{})
 	func() {
