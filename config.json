@@ -1,0 +1,14 @@
+{
+  "sites": [
+    {
+      "url": "http://YOUR.SITE.COM",
+      "port": 80
+    }
+  ],
+  "notification_email": {
+    "smtp": "smtp.gmail.com",
+    "port": 587,
+    "username": "your.email@gmail.com",
+    "password": "your.password"
+  }
+}
