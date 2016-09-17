@@ -11,6 +11,6 @@ Site Checker with Time Scheduling in Golang
 
 
 # TODOs
-- [ ] Make the ticker timeout configurable (currently it check every 10 minutes).
+- [ ] Make the ticker timeout configurable (currently it checks every 10 minutes).
 - [ ] Find a more sophisticated method to check the status of a website.
 - [ ] Check whether go channels are being garbage collected.
