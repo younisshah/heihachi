@@ -10,5 +10,9 @@
     "port": 587,
     "username": "your.email@gmail.com",
     "password": "your.password"
+  },
+  "every" : {
+    "duration" : 1,
+    "unit" : "S"
   }
 }
