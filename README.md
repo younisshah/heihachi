@@ -12,5 +12,11 @@ Site Checker with Time Scheduling in Golang
 
 # TODOs
 - [X] Make the ticker timeout configurable.
+    - ```JSON
+        "every" : {
+            "duration" : 1,
+            "unit" : "S" // S -> Second, M -> Minutes, H -> Hours
+          }
+     ```
 - [ ] Find a more sophisticated method to check the status of a website.
 - [ ] Check whether go channels are being garbage collected.
