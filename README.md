@@ -12,7 +12,7 @@ Site Checker with Time Scheduling in Golang
 
 # TODOs
 - [X] Make the ticker timeout configurable.
-     ```JavaScript
+     ```
         "every" : {
             "duration" : 1,
             "unit" : "S" // S -> Second, M -> Minutes, H -> Hours
