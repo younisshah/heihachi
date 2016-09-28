@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/smtp"
 	"strconv"
+	"time"
 )
 
 /**
@@ -20,16 +21,30 @@ import (
 var wg sync.WaitGroup
 
 func Watch() {
+
 	// Read the config.json file
 	config := getConfig()
-	// Add delta to the WaitGroup counter equal to the number of sites
-	// in the config.json file + 1 for sending email goroutine
-	wg.Add(len(config.Sites) + 1)
-	for _, v := range config.Sites {
-		go checkSite(v.URL, v.Port, config.EmailSettings)
+
+	// Time ticker - Thanks Sherlock!
+	var ticker *time.Ticker
+
+	switch config.Every.Unit {
+	case `H`:
+		// Make an hourly ticker
+		ticker = time.NewTicker(time.Duration(config.Every.Duration) * time.Hour)
+		break;
+	case `M` :
+		// Make a minute-wise ticker
+		ticker = time.NewTicker(time.Duration(config.Every.Duration) * time.Minute)
+	default:
+		// Make a second-wise ticker
+		ticker = time.NewTicker(time.Duration(config.Every.Duration) * time.Second)
 	}
-	// Wait for all the goroutines to finish!
-	wg.Wait()
+
+	for {
+		_watch(config)
+		<-ticker.C
+	}
 }
 
 func getConfig() Config {
@@ -49,10 +64,22 @@ func getConfig() Config {
 	return config
 }
 
+func _watch(config Config) {
+
+	// Add delta to the WaitGroup counter equal to the number of sites
+	// in the config.json file + 1 for sending email goroutine
+	wg.Add(len(config.Sites) + 1)
+	for _, v := range config.Sites {
+		go checkSite(v.URL, v.Port, config.EmailSettings)
+	}
+	// Wait for all the goroutines to finish!
+	wg.Wait()
+}
+
 // Check whether the site is up using a simple HTTP GET
 // If the site is not responding, send an email!
 // Note: This function runs in a goroutine!
-// TODO - find some more sophisticated method to check the status of the website!
+// TODO - find some more efficient method to check the status of the website!
 func checkSite(url string, port int, emailSettings NotificationEmailSettings) {
 	defer wg.Done()
 	if (port != 80) {
@@ -61,7 +88,7 @@ func checkSite(url string, port int, emailSettings NotificationEmailSettings) {
 	_, err := http.Get(url)
 	if (err != nil) {
 		go sendEmail(err.Error(), url, emailSettings)
-	}else {
+	} else {
 		log.Println("ALL WELL :)")
 	}
 }

@@ -12,7 +12,13 @@ type NotificationEmailSettings struct {
 	Port int `json:"port"`
 }
 
+type TimeSettings struct {
+	Duration int64 `json:"duration"`
+	Unit string `json:"unit`
+}
+
 type Config struct {
 	Sites []Site `json:"sites"`
 	EmailSettings NotificationEmailSettings `json:"notification_email"`
+	Every TimeSettings `json:"every"`
 }
